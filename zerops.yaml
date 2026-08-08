@@ -7,11 +7,12 @@ zerops:
     build:
       base: nodejs@20
       buildCommands:
-        - cd backend
-        - npm install
-        - cd ../frontend
-        - npm install
-        - npm run build
+        - |
+          cd backend
+          npm install
+          cd ../frontend
+          npm install
+          npm run build
       deployFiles:
         - ./backend/src
         - ./backend/package.json
@@ -43,8 +44,9 @@ zerops:
     build:
       base: nodejs@20
       buildCommands:
-        - cd backend
-        - npm install
+        - |
+          cd backend
+          npm install
       deployFiles:
         - ./backend/src
         - ./backend/package.json
@@ -74,9 +76,10 @@ zerops:
     build:
       base: nodejs@20
       buildCommands:
-        - cd frontend
-        - npm install
-        - npm run build
+        - |
+          cd frontend
+          npm install
+          npm run build
       deployFiles:
         - ./frontend/dist/~
       cache:
