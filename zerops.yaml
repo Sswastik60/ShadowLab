@@ -1,7 +1,43 @@
 # yaml-language-server: $schema=https://api.app-prg1.zerops.io/api/rest/public/settings/zerops-yml-json-schema.json
 zerops:
   # --------------------------------------------------------
-  # 1. Backend Service (Node.js + Express API Engine)
+  # 1. Main Service 'app' (Node.js API & Server Engine)
+  # --------------------------------------------------------
+  - setup: app
+    build:
+      base: nodejs@20
+      buildCommands:
+        - cd backend
+        - npm install
+        - cd ../frontend
+        - npm install
+        - npm run build
+      deployFiles:
+        - ./backend/src
+        - ./backend/package.json
+        - ./backend/node_modules
+        - ./frontend/dist/~
+      cache:
+        - backend/node_modules
+        - frontend/node_modules
+    run:
+      base: nodejs@20
+      start: node backend/src/server.js
+      ports:
+        - port: 5000
+          httpSupport: true
+      envVariables:
+        PORT: "5000"
+        NODE_ENV: "production"
+      healthCheck:
+        httpGet:
+          port: 5000
+          path: /health
+        failureTimeout: 30
+        execPeriod: 10
+
+  # --------------------------------------------------------
+  # 2. Standalone Backend Service 'api'
   # --------------------------------------------------------
   - setup: api
     build:
@@ -32,7 +68,7 @@ zerops:
         execPeriod: 10
 
   # --------------------------------------------------------
-  # 2. Frontend Service (React + Vite Desktop Dashboard)
+  # 3. Standalone Frontend Service 'frontend'
   # --------------------------------------------------------
   - setup: frontend
     build:
