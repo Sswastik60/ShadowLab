@@ -1,0 +1,61 @@
+# yaml-language-server: $schema=https://api.app-prg1.zerops.io/api/rest/public/settings/zerops-yml-json-schema.json
+zerops:
+  # --------------------------------------------------------
+  # 1. Backend Service (Node.js + Express API Engine)
+  # --------------------------------------------------------
+  - setup: api
+    build:
+      base: nodejs@20
+      buildCommands:
+        - cd backend
+        - npm install
+      deployFiles:
+        - ./backend/src
+        - ./backend/package.json
+        - ./backend/node_modules
+      cache:
+        - backend/node_modules
+    run:
+      base: nodejs@20
+      start: node backend/src/server.js
+      ports:
+        - port: 5000
+          httpSupport: true
+      envVariables:
+        PORT: "5000"
+        NODE_ENV: "production"
+      healthCheck:
+        httpGet:
+          port: 5000
+          path: /health
+        failureTimeout: 30
+        execPeriod: 10
+
+  # --------------------------------------------------------
+  # 2. Frontend Service (React + Vite Desktop Dashboard)
+  # --------------------------------------------------------
+  - setup: frontend
+    build:
+      base: nodejs@20
+      buildCommands:
+        - cd frontend
+        - npm install
+        - npm run build
+      deployFiles:
+        - ./frontend/dist/~
+      cache:
+        - frontend/node_modules
+    run:
+      base: nodejs@20
+      start: npx vite preview --host 0.0.0.0 --port 5173
+      ports:
+        - port: 5173
+          httpSupport: true
+      envVariables:
+        VITE_API_URL: "http://api:5000/api"
+      healthCheck:
+        httpGet:
+          port: 5173
+          path: /
+        failureTimeout: 30
+        execPeriod: 10
