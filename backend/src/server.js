@@ -15,33 +15,34 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// API Routes
 app.use('/api/projects', projectRoutes);
 app.use('/api/experiments', experimentRoutes);
 app.use('/api/chaos', chaosRoutes);
 app.use('/api/ai', aiRoutes);
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', service: 'ShadowLab Backend API', time: new Date().toISOString() });
+  res.json({ status: 'ok', service: 'ShadowLab Unified Server', time: new Date().toISOString() });
 });
 
-// Serve frontend static build assets if available
+// Serve React frontend static assets from /var/www/frontend/dist
 const distPath = path.resolve(__dirname, '../../frontend/dist');
 app.use(express.static(distPath));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'), (err) => {
     if (err) {
-      res.status(200).send('ShadowLab Backend API Service Active.');
+      res.status(200).send('ShadowLab Unified Server Active.');
     }
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 ShadowLab Express API running on http://localhost:${PORT}`);
+// Explicitly bind to 0.0.0.0 for Zerops HTTP router compatibility
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 ShadowLab Server active on http://0.0.0.0:${PORT}`);
 });

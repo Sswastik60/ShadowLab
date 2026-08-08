@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://api.app-prg1.zerops.io/api/rest/public/settings/zerops-yml-json-schema.json
 zerops:
   # --------------------------------------------------------
-  # 1. Main Service 'app' (Node.js API & Server Engine)
+  # 1. Main Unified Service 'app' (Node.js API + Frontend)
   # --------------------------------------------------------
   - setup: app
     build:
@@ -17,7 +17,7 @@ zerops:
         - ./backend/src
         - ./backend/package.json
         - ./backend/node_modules
-        - ./frontend/dist/~
+        - ./frontend/dist
       cache:
         - backend/node_modules
         - frontend/node_modules
@@ -25,52 +25,20 @@ zerops:
       base: nodejs@20
       start: node backend/src/server.js
       ports:
-        - port: 5000
+        - port: 3000
           httpSupport: true
       envVariables:
-        PORT: "5000"
+        PORT: "3000"
         NODE_ENV: "production"
       healthCheck:
         httpGet:
-          port: 5000
+          port: 3000
           path: /health
         failureTimeout: 30s
         execPeriod: 10s
 
   # --------------------------------------------------------
-  # 2. Standalone Backend Service 'api'
-  # --------------------------------------------------------
-  - setup: api
-    build:
-      base: nodejs@20
-      buildCommands:
-        - |
-          cd backend
-          npm install
-      deployFiles:
-        - ./backend/src
-        - ./backend/package.json
-        - ./backend/node_modules
-      cache:
-        - backend/node_modules
-    run:
-      base: nodejs@20
-      start: node backend/src/server.js
-      ports:
-        - port: 5000
-          httpSupport: true
-      envVariables:
-        PORT: "5000"
-        NODE_ENV: "production"
-      healthCheck:
-        httpGet:
-          port: 5000
-          path: /health
-        failureTimeout: 30s
-        execPeriod: 10s
-
-  # --------------------------------------------------------
-  # 3. Standalone Frontend Service 'frontend'
+  # 2. Standalone Service 'frontend'
   # --------------------------------------------------------
   - setup: frontend
     build:
@@ -86,15 +54,13 @@ zerops:
         - frontend/node_modules
     run:
       base: nodejs@20
-      start: npx vite preview --host 0.0.0.0 --port 5173
+      start: npx --yes serve -s ./ -l 3000
       ports:
-        - port: 5173
+        - port: 3000
           httpSupport: true
-      envVariables:
-        VITE_API_URL: "http://api:5000/api"
       healthCheck:
         httpGet:
-          port: 5173
+          port: 3000
           path: /
         failureTimeout: 30s
         execPeriod: 10s
