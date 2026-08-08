@@ -33,8 +33,8 @@ zerops:
         httpGet:
           port: 5000
           path: /health
-        failureTimeout: 30
-        execPeriod: 10
+        failureTimeout: 30s
+        execPeriod: 10s
 
   # --------------------------------------------------------
   # 2. Standalone Backend Service 'api'
@@ -64,8 +64,8 @@ zerops:
         httpGet:
           port: 5000
           path: /health
-        failureTimeout: 30
-        execPeriod: 10
+        failureTimeout: 30s
+        execPeriod: 10s
 
   # --------------------------------------------------------
   # 3. Standalone Frontend Service 'frontend'
@@ -93,5 +93,5 @@ zerops:
         httpGet:
           port: 5173
           path: /
-        failureTimeout: 30
-        execPeriod: 10
+        failureTimeout: 30s
+        execPeriod: 10s
