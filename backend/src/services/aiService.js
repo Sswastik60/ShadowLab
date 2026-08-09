@@ -57,7 +57,7 @@ Respond ONLY with valid JSON in this exact structure:
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${groqKey}`,
+            'Authorization': `Bearer ${groqKey.trim()}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
