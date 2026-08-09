@@ -3,10 +3,10 @@ import { useProject } from '../context/ProjectContext';
 import MetricCard from '../components/ui/MetricCard';
 import ServiceCard from '../components/ui/ServiceCard';
 import Architecture from '../components/ui/Architecture';
-import { Server, Database, Zap, Activity, ArrowRight, ShieldCheck, Beaker } from 'lucide-react';
+import { Server, Database, Zap, Activity, ArrowRight, ShieldCheck, Beaker, GitBranch } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Dashboard({ onOpenCreateModal }) {
+export default function Dashboard({ onOpenCreateModal, onOpenGithubModal }) {
   const { project, activeExperiment } = useProject();
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ export default function Dashboard({ onOpenCreateModal }) {
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-300">
       {/* Top Banner Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-neutral-900">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="h-3 w-3 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -26,15 +26,23 @@ export default function Dashboard({ onOpenCreateModal }) {
           <h1 className="text-3xl font-extrabold text-white tracking-tight m-0">
             {project.name}
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Live telemetry & service topology on Zerops ({project.region})
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={onOpenGithubModal}
+            className="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-800 text-xs font-extrabold flex items-center gap-2 cursor-pointer transition-all shadow-md"
+          >
+            <GitBranch className="h-4 w-4 text-emerald-400" />
+            <span>Import GitHub Repo</span>
+          </button>
+
           <button
             onClick={() => navigate('/experiments')}
-            className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 text-xs font-semibold flex items-center gap-2 cursor-pointer transition-all"
+            className="px-4 py-2.5 rounded-xl bg-neutral-950 hover:bg-neutral-900 text-neutral-300 border border-neutral-900 text-xs font-semibold flex items-center gap-2 cursor-pointer transition-all"
           >
             <Beaker className="h-4 w-4 text-emerald-400" />
             <span>Active Lab Experiments</span>

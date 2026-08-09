@@ -13,17 +13,20 @@ import Settings from './pages/Settings';
 
 import ConnectProjectModal from './components/modals/ConnectProjectModal';
 import CreateExperimentModal from './components/modals/CreateExperimentModal';
+import GithubImportModal from './components/modals/GithubImportModal';
 import ToastNotification from './components/ui/ToastNotification';
 
 function AppLayout() {
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isGithubModalOpen, setIsGithubModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-black text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
       <Navbar
         onOpenConnectModal={() => setIsConnectModalOpen(true)}
         onOpenCreateModal={() => setIsCreateModalOpen(true)}
+        onOpenGithubModal={() => setIsGithubModalOpen(true)}
       />
 
       <div className="flex flex-1 overflow-hidden">
@@ -33,7 +36,12 @@ function AppLayout() {
           <Routes>
             <Route
               path="/dashboard"
-              element={<Dashboard onOpenCreateModal={() => setIsCreateModalOpen(true)} />}
+              element={
+                <Dashboard
+                  onOpenCreateModal={() => setIsCreateModalOpen(true)}
+                  onOpenGithubModal={() => setIsGithubModalOpen(true)}
+                />
+              }
             />
             <Route
               path="/experiments"
@@ -56,6 +64,11 @@ function AppLayout() {
         onClose={() => setIsCreateModalOpen(false)}
       />
 
+      <GithubImportModal
+        isOpen={isGithubModalOpen}
+        onClose={() => setIsGithubModalOpen(false)}
+      />
+
       <ToastNotification />
     </div>
   );
@@ -73,4 +86,3 @@ export default function App() {
     </ProjectProvider>
   );
 }
-

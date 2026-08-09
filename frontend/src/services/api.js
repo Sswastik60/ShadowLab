@@ -158,4 +158,14 @@ export const api = {
       return experimentData.aiAnalysis;
     }
   },
+
+  /**
+   * Import & Inspect GitHub Repository
+   */
+  importGithubRepo: async (repoUrl) => {
+    return await fetchJson('/projects/github-import', {
+      method: 'POST',
+      body: JSON.stringify({ repoUrl }),
+    });
+  },
 };

@@ -148,7 +148,18 @@ export function ProjectProvider({ children }) {
     const result = await api.runChaosSimulation(scenarioId);
     setIsChaosRunning(false);
     setActiveChaosResult(result);
-    showNotification(`Chaos resilience test complete! Score: ${result.resilienceScore}/100`, 'info');
+    showNotification(`Chaos resilience test complete!`, 'info');
+  };
+
+  const importGithubRepo = async (repoUrl) => {
+    showNotification(`Cloning & auditing GitHub repository...`, 'info');
+    const res = await api.importGithubRepo(repoUrl);
+    if (res.experiment) {
+      setExperiments((prev) => [res.experiment, ...prev]);
+      setActiveExperimentId(res.experiment.id);
+      showNotification(`Successfully cloned "${res.repo?.repoName || 'Repo'}" and created Shadow Lab experiment!`, 'success');
+    }
+    return res;
   };
 
   const activeExperiment = experiments.find((e) => e.id === activeExperimentId) || experiments[0];
@@ -165,6 +176,7 @@ export function ProjectProvider({ children }) {
         setActiveExperimentId,
         createExperiment,
         promoteExperimentToProduction,
+        importGithubRepo,
         chaosScenarios,
         activeChaosResult,
         isChaosRunning,

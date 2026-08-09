@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useProject } from '../../context/ProjectContext';
-import { Beaker, Activity, CheckCircle2, RefreshCw, AlertTriangle, ArrowRight } from 'lucide-react';
+import { Beaker, Activity, CheckCircle2, RefreshCw, AlertTriangle, ArrowRight, GitBranch } from 'lucide-react';
 import appLogo from '../../assets/app logo.png';
 
-export default function Navbar({ onOpenConnectModal, onOpenCreateModal }) {
+export default function Navbar({ onOpenConnectModal, onOpenCreateModal, onOpenGithubModal }) {
   const { project, isConnected, notification } = useProject();
 
   return (
@@ -46,8 +46,16 @@ export default function Navbar({ onOpenConnectModal, onOpenCreateModal }) {
         {/* Action controls */}
         <div className="flex items-center gap-3">
           <button
+            onClick={onOpenGithubModal}
+            className="flex items-center gap-2 px-3 py-2 text-xs font-bold rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-100 border border-neutral-800 transition-all cursor-pointer shadow-sm"
+          >
+            <GitBranch className="h-4 w-4 text-emerald-400" />
+            <span className="hidden sm:inline">Import GitHub Repo</span>
+          </button>
+
+          <button
             onClick={onOpenConnectModal}
-            className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-lg bg-neutral-950 hover:bg-neutral-900 text-neutral-200 border border-neutral-800 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-3 py-2 text-xs font-medium rounded-lg bg-neutral-950 hover:bg-neutral-900 text-neutral-200 border border-neutral-800 transition-all cursor-pointer"
           >
             <Activity className="h-3.5 w-3.5 text-emerald-400" />
             <span>{isConnected ? project.name : 'Connect Zerops'}</span>

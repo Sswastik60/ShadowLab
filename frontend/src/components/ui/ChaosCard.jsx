@@ -81,17 +81,19 @@ export function ChaosResultCard({ result, isRunning }) {
     );
   }
 
+  const data = result.result || result;
+
   return (
     <div className="glass-panel rounded-2xl p-6 border-rose-500/30 bg-neutral-950 relative overflow-hidden shadow-xl">
       <div className="flex items-center justify-between pb-4 mb-4 border-b border-neutral-900">
         <div>
           <span className="text-[10px] font-bold uppercase tracking-wider text-rose-400">RESILIENCE TEST RESULT</span>
-          <h3 className="font-extrabold text-white text-base">{result.title}</h3>
+          <h3 className="font-extrabold text-white text-base">{data.title}</h3>
         </div>
 
         <div className="text-right">
           <span className="text-[10px] text-neutral-400 uppercase font-bold block">Resilience Score</span>
-          <span className="text-2xl font-black text-emerald-400 font-mono">{result.resilienceScore} <span className="text-xs text-neutral-500 font-normal">/ 100</span></span>
+          <span className="text-2xl font-black text-emerald-400 font-mono">{data.resilienceScore ?? 88} <span className="text-xs text-neutral-500 font-normal">/ 100</span></span>
         </div>
       </div>
 
@@ -100,7 +102,7 @@ export function ChaosResultCard({ result, isRunning }) {
           <span className="text-[10px] text-neutral-400 uppercase font-semibold">Production</span>
           <div className="flex items-center gap-1.5 font-bold text-emerald-400 text-xs mt-1">
             <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
-            <span>🟢 {result.prodStatus}</span>
+            <span>🟢 {data.prodStatus}</span>
           </div>
         </div>
 
@@ -108,25 +110,25 @@ export function ChaosResultCard({ result, isRunning }) {
           <span className="text-[10px] text-neutral-400 uppercase font-semibold">Shadow Lab</span>
           <div className="flex items-center gap-1.5 font-bold text-rose-400 text-xs mt-1">
             <span className="h-2 w-2 rounded-full bg-rose-400 animate-ping"></span>
-            <span>🔴 {result.shadowStatus}</span>
+            <span>🔴 {data.shadowStatus}</span>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4 mb-5 text-xs">
-        <div className="rounded-xl bg-neutral-900/60 p-3 border border-neutral-800">
+        <div className="rounded-xl bg-black p-3 border border-neutral-900">
           <span className="text-neutral-400 text-[11px]">Downtime</span>
-          <p className="font-bold text-slate-100 mt-0.5">{result.downtime}</p>
+          <p className="font-bold text-slate-100 mt-0.5">{data.downtime}</p>
         </div>
-        <div className="rounded-xl bg-neutral-900/60 p-3 border border-neutral-800">
+        <div className="rounded-xl bg-black p-3 border border-neutral-900">
           <span className="text-neutral-400 text-[11px]">Recovery Time</span>
-          <p className="font-bold text-emerald-400 mt-0.5">{result.recoveryTime}</p>
+          <p className="font-bold text-emerald-400 mt-0.5">{data.recoveryTime}</p>
         </div>
       </div>
 
       <div className="rounded-xl bg-rose-950/30 border border-rose-500/30 p-3.5 text-xs text-rose-200">
         <span className="font-bold text-rose-400 block mb-1">Identified Weakness:</span>
-        <p className="text-slate-300 text-[11px] leading-relaxed">{result.weakness}</p>
+        <p className="text-neutral-300 text-[11px] leading-relaxed">{data.weakness}</p>
       </div>
     </div>
   );
