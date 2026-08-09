@@ -9,8 +9,12 @@ import projectRoutes from './routes/projects.js';
 import experimentRoutes from './routes/experiments.js';
 import chaosRoutes from './routes/chaos.js';
 import aiRoutes from './routes/ai.js';
+import { initSchema } from './db/schema.js';
 
 dotenv.config();
+
+// Auto-initialize database tables if PostgreSQL is available
+initSchema().catch((e) => console.warn('Schema init deferred:', e.message));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
