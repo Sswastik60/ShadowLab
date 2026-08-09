@@ -171,3 +171,34 @@ export const promoteExperiment = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const streamTelemetry = (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+
+  const sendPoint = () => {
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const prodLatency = Math.floor(400 + Math.random() * 45);
+    const shadowLatency = Math.floor(140 + Math.random() * 25);
+    const prodDbLoad = Math.floor(58 + Math.random() * 8);
+    const shadowDbLoad = Math.floor(20 + Math.random() * 6);
+
+    const payload = JSON.stringify({
+      time,
+      prodLatency,
+      shadowLatency,
+      prodDbLoad,
+      shadowDbLoad,
+    });
+
+    res.write(`data: ${payload}\n\n`);
+  };
+
+  sendPoint();
+  const interval = setInterval(sendPoint, 2000);
+
+  req.on('close', () => {
+    clearInterval(interval);
+  });
+};
