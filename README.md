@@ -1,4 +1,4 @@
-# 🚀 ShadowLabs — Zero-Risk Production Experimentation & AI-Driven SRE Optimization
+# ShadowLabs — Zero-Risk Production Experimentation & AI-Driven SRE Optimization
 
 > **Built for the ZeroOps Hackathon 2026**
 > *Benchmark production infrastructure clones, simulate real-time traffic stress, inject chaos faults, and auto-promote optimized configurations using Groq Llama-3.3 AI.*
@@ -7,7 +7,7 @@
 
 ![ShadowLabs Header Banner](frontend/src/assets/app%20logo.png)
 
-## 📌 Problem Statement & Solution
+##  Problem Statement & Solution
 
 ### The Problem
 Modifying cloud infrastructure (attaching Redis/Valkey caches, altering worker instance scaling, or tweaking PostgreSQL database connections) in a live production environment carries immense risk of downtime, high latency, or data corruption for real users.
@@ -17,42 +17,42 @@ Modifying cloud infrastructure (attaching Redis/Valkey caches, altering worker i
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
-- **🧪 Shadow Experiment Isolation**: Clone live Zerops application services into a isolated benchmarking environment.
-- **🤖 Groq Llama-3.3 AI SRE Analyst**: Automated infrastructure optimization evaluation, risk identification, and recommendation powered by Groq's high-speed Llama-3.3 inference engine.
-- **🔥 Fault Injection & Chaos Lab**: Inject CPU spikes, DB dropouts, and latency delays to calculate resilience scorecards (`Resilience Score / 100`) without risking production uptime.
-- **📡 Real-Time SSE Telemetry Streaming**: Live Server-Sent Events (SSE) stream moving latency & database load curves on Recharts.
-- **🐙 GitHub Repository Inspector & Cloner**: Paste any public GitHub URL to automatically detect stack dependencies (`package.json`, `Dockerfile`, `zerops.yaml`) and trigger a Groq AI infrastructure audit.
-- **🐘 PostgreSQL Database Integration**: Persistent storage using PostgreSQL connection pooling (`pg`) with automatic schema migrations for `projects`, `experiments`, and `chaos_runs`.
-- **📥 SRE Audit Report Exporter**: Download formatted Markdown/JSON SRE Audit reports containing AI analysis and benchmarking data.
+- ** Shadow Experiment Isolation**: Clone live Zerops application services into a isolated benchmarking environment.
+- ** Groq Llama-3.3 AI SRE Analyst**: Automated infrastructure optimization evaluation, risk identification, and recommendation powered by Groq's high-speed Llama-3.3 inference engine.
+- ** Fault Injection & Chaos Lab**: Inject CPU spikes, DB dropouts, and latency delays to calculate resilience scorecards (`Resilience Score / 100`) without risking production uptime.
+- ** Real-Time SSE Telemetry Streaming**: Live Server-Sent Events (SSE) stream moving latency & database load curves on Recharts.
+- ** GitHub Repository Inspector & Cloner**: Paste any public GitHub URL to automatically detect stack dependencies (`package.json`, `Dockerfile`, `zerops.yaml`) and trigger a Groq AI infrastructure audit.
+- ** PostgreSQL Database Integration**: Persistent storage using PostgreSQL connection pooling (`pg`) with automatic schema migrations for `projects`, `experiments`, and `chaos_runs`.
+- ** SRE Audit Report Exporter**: Download formatted Markdown/JSON SRE Audit reports containing AI analysis and benchmarking data.
 
 ---
 
-## 🏗️ Architecture Map
+##  Architecture Map
 
 ```mermaid
 graph TD
-    User["🌐 Ingress Traffic"] --> Router["Zerops Router (Port 3000)"]
-    Router --> Server["🚀 Node.js Express Unified Server"]
+    User[" Ingress Traffic"] --> Router["Zerops Router (Port 3000)"]
+    Router --> Server[" Node.js Express Unified Server"]
     
     subgraph ZeroOps Platform Architecture
-        Server --> Frontend["🎨 React 19 + Vite Frontend SPA"]
-        Server --> GroqAI["🤖 Groq Llama-3.3-70b AI Engine API"]
-        Server --> PostgresDB["🐘 Zerops PostgreSQL 16 DB (Pool)"]
-        Server --> ValkeyCache["⚡ Valkey In-Memory Cache (Shadow)"]
+        Server --> Frontend[" React 19 + Vite Frontend SPA"]
+        Server --> GroqAI["Groq Llama-3.3-70b AI Engine API"]
+        Server --> PostgresDB[" Zerops PostgreSQL 16 DB (Pool)"]
+        Server --> ValkeyCache[" Valkey In-Memory Cache (Shadow)"]
     end
     
     subgraph Experimentation Pipeline
-        Server --> SSEStream["📡 Real-Time Telemetry SSE Stream"]
-        Server --> ChaosEngine["🔥 Fault Injection & Resilience Evaluator"]
-        Server --> GitHubInspector["🐙 GitHub Repository Cloner"]
+        Server --> SSEStream[" Real-Time Telemetry SSE Stream"]
+        Server --> ChaosEngine[" Fault Injection & Resilience Evaluator"]
+        Server --> GitHubInspector[" GitHub Repository Cloner"]
     end
 ```
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Component | Technology Used |
 |---|---|
@@ -65,7 +65,7 @@ graph TD
 
 ---
 
-## ⚙️ Environment Variables Setup
+##  Environment Variables Setup
 
 Create a `.env` file in the `backend/` directory:
 
@@ -86,7 +86,7 @@ ZEROPS_DB_NAME=shadowlab
 
 ---
 
-## 🚀 Local Quickstart Guide
+##  Local Quickstart Guide
 
 ### 1. Clone Repository
 ```bash
@@ -112,7 +112,7 @@ Open `http://localhost:5173` (or `http://localhost:3000`) in your browser.
 
 ---
 
-## ☁️ Deploying to Zerops
+##  Deploying to Zerops
 
 Deploy using the official **Zerops CLI (`zcli`)**:
 
@@ -121,19 +121,6 @@ zcli push app --setup app
 ```
 
 `zerops.yaml` handles building both backend dependencies and frontend static assets automatically in Node.js runtime container.
-
----
-
-## 🏆 Hackathon Judge Demo Walkthrough (3-Minute Script)
-
-1. **Hero Landing Page**: Navigate to the landing page featuring the pitch-black AMOLED dark theme and value proposition.
-2. **Production Dashboard**: View connected Zerops service topology, active Node workers, and database load.
-3. **Launch Shadow Lab Experiment**: Click **"New Experiment"** or **"Import GitHub Repo"** (`Sswastik60/ShadowLab`), attach a Valkey Cache, and set traffic stress to 1,500 req/sec.
-4. **Live Telemetry & Groq AI Audit**: Observe the moving real-time SSE chart showing a 66% latency drop. Inspect Groq Llama-3.3's automated audit reasoning.
-5. **Chaos Testing**: Navigate to **Chaos Lab**, inject a *CPU Spike* or *DB Outage* fault scenario, and observe the zero blast radius isolation.
-6. **Promote & Export**: Click **"Export Audit"** to download the Markdown report, then click **"Promote to Production"**!
-
----
 
 ## 📄 License
 
