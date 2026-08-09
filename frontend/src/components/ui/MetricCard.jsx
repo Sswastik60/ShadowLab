@@ -17,9 +17,9 @@ export default function MetricCard({ title, value, unit = '', subtitle, icon: Ic
   };
 
   return (
-    <div className="glass-panel glass-panel-hover rounded-2xl p-5 transition-all">
+    <div className="glass-panel glass-panel-hover rounded-2xl p-5 transition-all bg-neutral-950 border-neutral-900">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-medium text-slate-400">{title}</span>
+        <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider">{title}</span>
         {Icon && (
           <div className={`p-2 rounded-xl border ${getStatusStyle()}`}>
             <Icon className="h-4 w-4" />
@@ -29,18 +29,18 @@ export default function MetricCard({ title, value, unit = '', subtitle, icon: Ic
 
       <div className="flex items-baseline gap-2">
         <span className="text-2xl font-extrabold tracking-tight text-white">{value}</span>
-        {unit && <span className="text-xs font-semibold text-slate-400">{unit}</span>}
+        {unit && <span className="text-xs font-semibold text-neutral-400">{unit}</span>}
       </div>
 
       {shadowValue !== undefined && (
-        <div className="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs">
-          <span className="text-slate-400">Shadow Lab:</span>
+        <div className="mt-2 pt-2 border-t border-neutral-900 flex items-center justify-between text-xs">
+          <span className="text-neutral-400">Shadow Lab:</span>
           <span className="font-bold text-emerald-400">{shadowValue} {shadowUnit || unit}</span>
         </div>
       )}
 
       {subtitle && (
-        <p className="mt-2 text-[11px] text-slate-400 flex items-center gap-1">
+        <p className="mt-2 text-[11px] text-neutral-400 flex items-center gap-1 font-mono">
           {trend === 'down' && <ArrowDownRight className="h-3.5 w-3.5 text-emerald-400" />}
           {trend === 'up' && <ArrowUpRight className="h-3.5 w-3.5 text-rose-400" />}
           {subtitle}

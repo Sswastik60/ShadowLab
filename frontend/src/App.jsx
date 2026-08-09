@@ -13,6 +13,7 @@ import Settings from './pages/Settings';
 
 import ConnectProjectModal from './components/modals/ConnectProjectModal';
 import CreateExperimentModal from './components/modals/CreateExperimentModal';
+import ToastNotification from './components/ui/ToastNotification';
 
 function AppLayout() {
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
@@ -54,6 +55,8 @@ function AppLayout() {
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
       />
+
+      <ToastNotification />
     </div>
   );
 }

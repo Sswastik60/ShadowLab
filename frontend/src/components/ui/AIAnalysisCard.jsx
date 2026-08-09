@@ -10,24 +10,24 @@ export default function AIAnalysisCard({ analysis, experimentId }) {
   const isSuccess = analysis.resultType === 'success' || analysis.canPromote;
 
   return (
-    <div className="glass-panel rounded-2xl p-6 border-emerald-500/30 bg-gradient-to-b from-slate-900/90 to-slate-950/90 relative overflow-hidden shadow-2xl">
+    <div className="glass-panel rounded-2xl p-6 border-emerald-500/30 bg-neutral-950 relative overflow-hidden shadow-2xl">
       {/* Decorative ambient glow */}
       <div className="absolute -top-10 -right-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
       {/* Card Header */}
-      <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
+      <div className="flex items-center justify-between pb-4 mb-5 border-b border-neutral-900">
         <div className="flex items-center gap-2">
           <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
             <Sparkles className="h-4 w-4 animate-pulse" />
           </div>
           <div>
-            <h3 className="font-bold text-slate-100 text-sm tracking-wide flex items-center gap-2">
+            <h3 className="font-bold text-neutral-100 text-sm tracking-wide flex items-center gap-2">
               <span>AI EXPERIMENT ANALYST</span>
-              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">
-                Gemini Engine
+              <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
+                <Zap className="h-3 w-3 text-emerald-400" /> Groq Llama-3.3
               </span>
             </h3>
-            <p className="text-[11px] text-slate-400">Automated performance & risk assessment</p>
+            <p className="text-[11px] text-neutral-400">Automated performance & risk assessment</p>
           </div>
         </div>
 
@@ -49,13 +49,13 @@ export default function AIAnalysisCard({ analysis, experimentId }) {
 
       {/* Main Reasons Bullet List */}
       <div className="mb-5">
-        <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5">
+        <p className="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2.5 flex items-center gap-1.5">
           <Zap className="h-3.5 w-3.5 text-emerald-400" />
           Main Reasons
         </p>
         <ul className="space-y-2">
           {analysis.reasons?.map((reason, idx) => (
-            <li key={idx} className="flex items-start gap-2 text-xs text-slate-200 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+            <li key={idx} className="flex items-start gap-2 text-xs text-neutral-200 bg-black p-2.5 rounded-xl border border-neutral-900">
               <span className="text-emerald-400 font-bold">•</span>
               <span>{reason}</span>
             </li>
@@ -71,7 +71,7 @@ export default function AIAnalysisCard({ analysis, experimentId }) {
             <span>Potential Risk Identified</span>
           </div>
           {analysis.risks.map((risk, idx) => (
-            <p key={idx} className="text-slate-300 text-[11px] leading-relaxed">
+            <p key={idx} className="text-neutral-300 text-[11px] leading-relaxed">
               {risk}
             </p>
           ))}
@@ -79,8 +79,8 @@ export default function AIAnalysisCard({ analysis, experimentId }) {
       )}
 
       {/* Recommendation & Hero Promote Button */}
-      <div className="pt-4 border-t border-slate-800">
-        <p className="text-xs font-semibold text-slate-400 mb-3">Recommendation</p>
+      <div className="pt-4 border-t border-neutral-900">
+        <p className="text-xs font-semibold text-neutral-400 mb-3">Recommendation</p>
 
         {analysis.canPromote ? (
           <button
@@ -92,7 +92,7 @@ export default function AIAnalysisCard({ analysis, experimentId }) {
             <ArrowRight className="h-4 w-4 text-slate-950" />
           </button>
         ) : (
-          <div className="w-full py-3 px-4 rounded-xl bg-slate-800 text-slate-400 font-bold text-xs text-center border border-slate-700 flex items-center justify-center gap-2">
+          <div className="w-full py-3 px-4 rounded-xl bg-neutral-900 text-neutral-400 font-bold text-xs text-center border border-neutral-800 flex items-center justify-center gap-2">
             <CheckCircle2 className="h-4 w-4 text-emerald-400" />
             <span>ALREADY PROMOTED TO PRODUCTION</span>
           </div>
