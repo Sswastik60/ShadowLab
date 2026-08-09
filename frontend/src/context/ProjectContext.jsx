@@ -1,11 +1,12 @@
-import React, { createContext, useContext, useState } from 'react';
-import { INITIAL_PROJECT, INITIAL_EXPERIMENTS, CHAOS_SCENARIOS, calculateCustomExperiment } from '../services/mockData';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { INITIAL_PROJECT, INITIAL_EXPERIMENTS, CHAOS_SCENARIOS } from '../services/mockData';
+import { api } from '../services/api';
 
 const ProjectContext = createContext(null);
 
 export function ProjectProvider({ children }) {
   const [project, setProject] = useState(INITIAL_PROJECT);
-  const [isConnected, setIsConnected] = useState(true); // Connected by default with demo data
+  const [isConnected, setIsConnected] = useState(true);
   const [experiments, setExperiments] = useState(INITIAL_EXPERIMENTS);
   const [activeExperimentId, setActiveExperimentId] = useState(INITIAL_EXPERIMENTS[0].id);
   const [chaosScenarios, setChaosScenarios] = useState(CHAOS_SCENARIOS);
@@ -13,12 +14,37 @@ export function ProjectProvider({ children }) {
   const [isChaosRunning, setIsChaosRunning] = useState(false);
   const [notification, setNotification] = useState(null);
 
+  // Sync state from backend API on initial render
+  useEffect(() => {
+    async function initData() {
+      try {
+        const fetchedProject = await api.getProject('my-production-app');
+        if (fetchedProject) setProject(fetchedProject);
+
+        const fetchedExperiments = await api.getExperiments();
+        if (fetchedExperiments && fetchedExperiments.length > 0) {
+          setExperiments(fetchedExperiments);
+          setActiveExperimentId(fetchedExperiments[0].id);
+        }
+
+        const fetchedScenarios = await api.getChaosScenarios();
+        if (fetchedScenarios && fetchedScenarios.length > 0) {
+          setChaosScenarios(fetchedScenarios);
+        }
+      } catch (err) {
+        console.warn('Initial API sync notice:', err.message);
+      }
+    }
+    initData();
+  }, []);
+
   const showNotification = (message, type = 'info') => {
     setNotification({ message, type });
     setTimeout(() => setNotification(null), 4000);
   };
 
-  const connectProject = (projectId) => {
+  const connectProject = async (projectId) => {
+    const res = await api.connectProject(projectId);
     setProject((prev) => ({
       ...prev,
       id: projectId || 'my-production-app',
@@ -26,44 +52,28 @@ export function ProjectProvider({ children }) {
       status: 'healthy',
     }));
     setIsConnected(true);
-    showNotification(`Connected to Zerops project: ${projectId || 'my-production-app'}`, 'success');
+    showNotification(res.message || `Connected to Zerops project: ${projectId || 'my-production-app'}`, 'success');
   };
 
-  const createExperiment = (config) => {
-    const calculated = calculateCustomExperiment(config);
-    const newExp = {
-      id: `exp-${Date.now()}`,
-      name: config.name || 'New Experiment',
-      status: 'running',
-      createdAt: 'Just now',
-      basedOn: config.basedOn || 'Production',
-      trafficRate: config.trafficRate || 1000,
-      infraChanges: config.infraChanges,
-      metrics: {
-        ...calculated.metrics,
-        history: [
-          { time: '00:00', prodLatency: calculated.metrics.production.latency + 10, shadowLatency: calculated.metrics.shadow.latency + 5, prodDbLoad: calculated.metrics.production.dbLoad, shadowDbLoad: calculated.metrics.shadow.dbLoad },
-          { time: '00:05', prodLatency: calculated.metrics.production.latency - 5, shadowLatency: calculated.metrics.shadow.latency - 3, prodDbLoad: calculated.metrics.production.dbLoad + 1, shadowDbLoad: calculated.metrics.shadow.dbLoad },
-          { time: '00:10', prodLatency: calculated.metrics.production.latency, shadowLatency: calculated.metrics.shadow.latency, prodDbLoad: calculated.metrics.production.dbLoad, shadowDbLoad: calculated.metrics.shadow.dbLoad },
-        ],
-      },
-      aiAnalysis: calculated.aiAnalysis,
-    };
-
+  const createExperiment = async (config) => {
+    const newExp = await api.createExperiment(config);
     setExperiments((prev) => [newExp, ...prev]);
     setActiveExperimentId(newExp.id);
     showNotification(`Created shadow lab environment for "${newExp.name}"`, 'success');
     return newExp;
   };
 
-  const promoteExperimentToProduction = (experimentId) => {
+  const promoteExperimentToProduction = async (experimentId) => {
     const targetExp = experiments.find((e) => e.id === experimentId);
     if (!targetExp) return;
+
+    // Call backend API promote endpoint
+    await api.promoteExperiment(experimentId);
 
     // Update project state with the promoted shadow infrastructure!
     setProject((prev) => {
       const updatedServices = prev.services.map((service) => {
-        if (service.type === 'cache' && targetExp.infraChanges.addValkey) {
+        if (service.type === 'cache' && targetExp.infraChanges?.addValkey) {
           return {
             ...service,
             status: 'healthy',
@@ -75,15 +85,15 @@ export function ProjectProvider({ children }) {
         if (service.type === 'app') {
           return {
             ...service,
-            instances: targetExp.infraChanges.increaseWorkers ? 4 : service.instances,
-            latency: targetExp.metrics.shadow.latency,
-            cpuUsage: targetExp.metrics.shadow.cpuUsage,
+            instances: targetExp.infraChanges?.increaseWorkers ? 4 : service.instances,
+            latency: targetExp.metrics?.shadow?.latency || service.latency,
+            cpuUsage: targetExp.metrics?.shadow?.cpuUsage || service.cpuUsage,
           };
         }
         if (service.type === 'db') {
           return {
             ...service,
-            load: targetExp.metrics.shadow.dbLoad,
+            load: targetExp.metrics?.shadow?.dbLoad || service.load,
           };
         }
         return service;
@@ -91,10 +101,10 @@ export function ProjectProvider({ children }) {
 
       // Update topology nodes
       const updatedNodes = prev.topology.nodes.map((node) => {
-        if (node.type === 'cache' && targetExp.infraChanges.addValkey) {
+        if (node.type === 'cache' && targetExp.infraChanges?.addValkey) {
           return { ...node, status: 'healthy', label: 'Valkey Cache (Active)' };
         }
-        if (node.type === 'app' && targetExp.infraChanges.increaseWorkers) {
+        if (node.type === 'app' && targetExp.infraChanges?.increaseWorkers) {
           return { ...node, label: 'API (4 Workers)' };
         }
         return node;
@@ -102,7 +112,7 @@ export function ProjectProvider({ children }) {
 
       // Ensure cache edge exists
       let updatedEdges = [...prev.topology.edges];
-      if (targetExp.infraChanges.addValkey && !updatedEdges.some((e) => e.target === 'cache')) {
+      if (targetExp.infraChanges?.addValkey && !updatedEdges.some((e) => e.target === 'cache')) {
         updatedEdges.push({ source: 'api', target: 'cache', label: 'Valkey Hit (87%)' });
       }
 
@@ -128,18 +138,17 @@ export function ProjectProvider({ children }) {
     showNotification(`Successfully promoted experiment "${targetExp.name}" to Production!`, 'success');
   };
 
-  const runChaosTest = (scenarioId) => {
+  const runChaosTest = async (scenarioId) => {
     setIsChaosRunning(true);
     setActiveChaosResult(null);
 
     const scenario = chaosScenarios.find((s) => s.id === scenarioId);
-    showNotification(`Injecting chaos scenario: "${scenario.name}" into Shadow Lab...`, 'warning');
+    showNotification(`Injecting chaos scenario: "${scenario?.name || 'Simulation'}" into Shadow Lab...`, 'warning');
 
-    setTimeout(() => {
-      setIsChaosRunning(false);
-      setActiveChaosResult(scenario.result);
-      showNotification(`Chaos resilience test complete! Score: ${scenario.result.resilienceScore}/100`, 'info');
-    }, 2500);
+    const result = await api.runChaosSimulation(scenarioId);
+    setIsChaosRunning(false);
+    setActiveChaosResult(result);
+    showNotification(`Chaos resilience test complete! Score: ${result.resilienceScore}/100`, 'info');
   };
 
   const activeExperiment = experiments.find((e) => e.id === activeExperimentId) || experiments[0];
@@ -176,3 +185,4 @@ export function useProject() {
   }
   return context;
 }
+
