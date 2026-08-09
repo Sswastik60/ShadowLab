@@ -74,9 +74,9 @@ export default function LandingPage() {
             <a href="#how-it-works" className="hover:text-emerald-400 transition-colors">
               How It Works
             </a>
-            <a href="#chaos-lab" className="hover:text-emerald-400 transition-colors">
+            <button onClick={() => navigate('/chaos')} className="hover:text-emerald-400 transition-colors cursor-pointer">
               Chaos Resilience
-            </a>
+            </button>
             <a href="#tech-stack" className="hover:text-emerald-400 transition-colors">
               Zerops + AI Stack
             </a>
@@ -133,13 +133,13 @@ export default function LandingPage() {
               <ArrowRight className="h-4 w-4" />
             </button>
 
-            <a
-              href="#chaos-lab"
-              className="w-full sm:w-auto px-8 py-4 text-sm font-semibold rounded-xl bg-neutral-950 hover:bg-neutral-900 text-slate-200 border border-neutral-800 transition-all flex items-center justify-center gap-2"
+            <button
+              onClick={() => navigate('/chaos')}
+              className="w-full sm:w-auto px-8 py-4 text-sm font-semibold rounded-xl bg-neutral-950 hover:bg-neutral-900 text-slate-200 border border-neutral-800 transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
             >
               <Flame className="h-4 w-4 text-rose-500" />
               <span>Try Chaos Fault Simulator</span>
-            </a>
+            </button>
           </motion.div>
         </motion.div>
 
