@@ -32,10 +32,10 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 border-r border-slate-800 bg-slate-950/60 p-4 flex flex-col justify-between hidden md:flex shrink-0">
+    <aside className="w-64 border-r border-neutral-900 bg-black p-4 flex flex-col justify-between hidden md:flex shrink-0">
       <div className="space-y-6">
         <div>
-          <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Main Menu</p>
+          <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-2">Main Menu</p>
           <nav className="space-y-1">
             {navItems.map((item) => (
               <NavLink
@@ -45,7 +45,7 @@ export default function Sidebar() {
                   `flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${
                     isActive
                       ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
+                      : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-950'
                   }`
                 }
               >
@@ -54,7 +54,7 @@ export default function Sidebar() {
                   <span>{item.name}</span>
                 </div>
                 {item.badge && (
-                  <span className="rounded-full bg-slate-800 px-2 py-0.5 text-[10px] font-bold text-slate-300">
+                  <span className="rounded-full bg-neutral-900 px-2 py-0.5 text-[10px] font-bold text-neutral-300 border border-neutral-800">
                     {item.badge}
                   </span>
                 )}
@@ -69,13 +69,13 @@ export default function Sidebar() {
         </div>
 
         {/* Zerops Environment Status Box */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-3 text-xs">
-          <div className="flex items-center gap-2 mb-2 text-slate-300 font-semibold">
+        <div className="rounded-2xl border border-neutral-900 bg-neutral-950 p-3 text-xs">
+          <div className="flex items-center gap-2 mb-2 text-neutral-300 font-semibold">
             <Server className="h-4 w-4 text-emerald-400" />
             <span>Zerops Target</span>
           </div>
-          <p className="text-[11px] text-slate-400 mb-2">Connected to app cluster:</p>
-          <div className="rounded-lg bg-slate-950 p-2 border border-slate-800/80 font-mono text-[11px] text-emerald-400 flex items-center justify-between">
+          <p className="text-[11px] text-neutral-400 mb-2">Connected to app cluster:</p>
+          <div className="rounded-lg bg-black p-2 border border-neutral-900 font-mono text-[11px] text-emerald-400 flex items-center justify-between">
             <span>my-production-app</span>
             <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
           </div>
@@ -83,9 +83,9 @@ export default function Sidebar() {
       </div>
 
       {/* Footer Tag */}
-      <div className="border-t border-slate-800/60 pt-4 px-2 text-[11px] text-slate-500 flex items-center justify-between">
+      <div className="border-t border-neutral-900 pt-4 px-2 text-[11px] text-neutral-500 flex items-center justify-between">
         <span>ZeroOps Hackathon</span>
-        <span className="text-slate-400 font-mono">Prague UTC</span>
+        <span className="text-neutral-400 font-mono">Prague UTC</span>
       </div>
     </aside>
   );
