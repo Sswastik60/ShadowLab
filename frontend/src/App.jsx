@@ -4,6 +4,7 @@ import { ProjectProvider } from './context/ProjectContext';
 import Navbar from './components/layout/Navbar';
 import Sidebar from './components/layout/Sidebar';
 
+import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import Experiments from './pages/Experiments';
 import ExperimentDetail from './pages/ExperimentDetail';
@@ -13,12 +14,12 @@ import Settings from './pages/Settings';
 import ConnectProjectModal from './components/modals/ConnectProjectModal';
 import CreateExperimentModal from './components/modals/CreateExperimentModal';
 
-function AppContent() {
+function AppLayout() {
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950">
+    <div className="min-h-screen bg-black text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
       <Navbar
         onOpenConnectModal={() => setIsConnectModalOpen(true)}
         onOpenCreateModal={() => setIsCreateModalOpen(true)}
@@ -30,7 +31,7 @@ function AppContent() {
         <main className="flex-1 overflow-y-auto min-h-[calc(100vh-4rem)]">
           <Routes>
             <Route
-              path="/"
+              path="/dashboard"
               element={<Dashboard onOpenCreateModal={() => setIsCreateModalOpen(true)} />}
             />
             <Route
@@ -61,8 +62,12 @@ export default function App() {
   return (
     <ProjectProvider>
       <Router>
-        <AppContent />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/*" element={<AppLayout />} />
+        </Routes>
       </Router>
     </ProjectProvider>
   );
 }
+

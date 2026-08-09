@@ -118,7 +118,7 @@ export default function CreateExperimentModal({ isOpen, onClose }) {
                 }`}>
                   {infraChanges.addValkey && <Check className="h-3 w-3 stroke-[3]" />}
                 </div>
-                <Zap className="h-4 w-4 text-cyan-400" />
+                <Zap className="h-4 w-4 text-emerald-400" />
                 <span className="font-semibold">Add Valkey Cache</span>
               </div>
 
@@ -152,7 +152,7 @@ export default function CreateExperimentModal({ isOpen, onClose }) {
                 }`}>
                   {infraChanges.increaseMemory && <Check className="h-3 w-3 stroke-[3]" />}
                 </div>
-                <Cpu className="h-4 w-4 text-indigo-400" />
+                <Cpu className="h-4 w-4 text-emerald-400" />
                 <span className="font-semibold">Increase Memory (1GB -&gt; 2GB)</span>
               </div>
 
@@ -193,7 +193,7 @@ export default function CreateExperimentModal({ isOpen, onClose }) {
                   onClick={() => setTrafficRate(item.value)}
                   className={`py-2.5 rounded-xl border font-bold text-center transition-all cursor-pointer ${
                     trafficRate === item.value
-                      ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20'
+                      ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-black border-emerald-400 shadow-md shadow-emerald-500/20'
                       : 'bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700'
                   }`}
                 >

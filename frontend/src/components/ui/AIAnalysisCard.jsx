@@ -85,7 +85,7 @@ export default function AIAnalysisCard({ analysis, experimentId }) {
         {analysis.canPromote ? (
           <button
             onClick={() => promoteExperimentToProduction(experimentId)}
-            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 via-emerald-400 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-extrabold text-sm tracking-wide shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
+            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-black font-extrabold text-sm tracking-wide shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
           >
             <ShieldCheck className="h-5 w-5 text-slate-950" />
             <span>PROMOTE TO PRODUCTION</span>

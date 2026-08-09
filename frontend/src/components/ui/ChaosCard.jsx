@@ -34,7 +34,7 @@ export default function ChaosCard({ scenario, onSelect, isSelected }) {
             <h4 className="font-bold text-slate-100 text-sm">{scenario.name}</h4>
             <span className={`text-[10px] font-bold uppercase tracking-wider ${
               scenario.severity === 'Critical' ? 'text-rose-400' :
-              scenario.severity === 'High' ? 'text-amber-400' : 'text-cyan-400'
+              scenario.severity === 'High' ? 'text-amber-400' : 'text-emerald-400'
             }`}>
               {scenario.severity} Impact
             </span>
@@ -42,13 +42,13 @@ export default function ChaosCard({ scenario, onSelect, isSelected }) {
         </div>
 
         <div className={`h-4 w-4 rounded-full border flex items-center justify-center ${
-          isSelected ? 'border-rose-500 bg-rose-500' : 'border-slate-700'
+          isSelected ? 'border-rose-500 bg-rose-500' : 'border-neutral-800'
         }`}>
-          {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-slate-950"></span>}
+          {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-black"></span>}
         </div>
       </div>
 
-      <p className="text-xs text-slate-400 line-clamp-2">{scenario.description}</p>
+      <p className="text-xs text-neutral-400 line-clamp-2">{scenario.description}</p>
     </div>
   );
 }
@@ -62,7 +62,7 @@ export function ChaosResultCard({ result, isRunning }) {
           <Flame className="h-6 w-6 text-rose-400 absolute inset-0 m-auto animate-pulse" />
         </div>
         <h4 className="text-lg font-bold text-rose-300">INJECTING FAULT INTO SHADOW LAB...</h4>
-        <p className="text-xs text-slate-400 max-w-xs mt-1">
+        <p className="text-xs text-neutral-400 max-w-xs mt-1">
           Observing node dropouts, retry loops, and failover latency...
         </p>
       </div>
@@ -71,10 +71,10 @@ export function ChaosResultCard({ result, isRunning }) {
 
   if (!result) {
     return (
-      <div className="glass-panel rounded-2xl p-8 border-slate-800 text-center flex flex-col items-center justify-center min-h-[300px]">
-        <ShieldAlert className="h-12 w-12 text-slate-600 mb-3" />
-        <h4 className="text-base font-semibold text-slate-300">No Chaos Test Executed Yet</h4>
-        <p className="text-xs text-slate-500 max-w-sm mt-1">
+      <div className="glass-panel rounded-2xl p-8 border-neutral-900 text-center flex flex-col items-center justify-center min-h-[300px]">
+        <ShieldAlert className="h-12 w-12 text-neutral-600 mb-3" />
+        <h4 className="text-base font-semibold text-neutral-300">No Chaos Test Executed Yet</h4>
+        <p className="text-xs text-neutral-500 max-w-sm mt-1">
           Select a fault scenario on the left and click "Run Chaos Experiment" to evaluate resilience.
         </p>
       </div>
@@ -82,30 +82,30 @@ export function ChaosResultCard({ result, isRunning }) {
   }
 
   return (
-    <div className="glass-panel rounded-2xl p-6 border-rose-500/30 bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden shadow-xl">
-      <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+    <div className="glass-panel rounded-2xl p-6 border-rose-500/30 bg-neutral-950 relative overflow-hidden shadow-xl">
+      <div className="flex items-center justify-between pb-4 mb-4 border-b border-neutral-900">
         <div>
           <span className="text-[10px] font-bold uppercase tracking-wider text-rose-400">RESILIENCE TEST RESULT</span>
           <h3 className="font-extrabold text-white text-base">{result.title}</h3>
         </div>
 
         <div className="text-right">
-          <span className="text-[10px] text-slate-400 uppercase font-bold block">Resilience Score</span>
-          <span className="text-2xl font-black text-emerald-400 font-mono">{result.resilienceScore} <span className="text-xs text-slate-500 font-normal">/ 100</span></span>
+          <span className="text-[10px] text-neutral-400 uppercase font-bold block">Resilience Score</span>
+          <span className="text-2xl font-black text-emerald-400 font-mono">{result.resilienceScore} <span className="text-xs text-neutral-500 font-normal">/ 100</span></span>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4 mb-5">
-        <div className="rounded-xl bg-slate-950 p-3 border border-slate-800">
-          <span className="text-[10px] text-slate-400 uppercase font-semibold">Production</span>
+        <div className="rounded-xl bg-black p-3 border border-neutral-900">
+          <span className="text-[10px] text-neutral-400 uppercase font-semibold">Production</span>
           <div className="flex items-center gap-1.5 font-bold text-emerald-400 text-xs mt-1">
             <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
             <span>🟢 {result.prodStatus}</span>
           </div>
         </div>
 
-        <div className="rounded-xl bg-slate-950 p-3 border border-slate-800">
-          <span className="text-[10px] text-slate-400 uppercase font-semibold">Shadow Lab</span>
+        <div className="rounded-xl bg-black p-3 border border-neutral-900">
+          <span className="text-[10px] text-neutral-400 uppercase font-semibold">Shadow Lab</span>
           <div className="flex items-center gap-1.5 font-bold text-rose-400 text-xs mt-1">
             <span className="h-2 w-2 rounded-full bg-rose-400 animate-ping"></span>
             <span>🔴 {result.shadowStatus}</span>
@@ -114,13 +114,13 @@ export function ChaosResultCard({ result, isRunning }) {
       </div>
 
       <div className="grid grid-cols-2 gap-4 mb-5 text-xs">
-        <div className="rounded-xl bg-slate-900/60 p-3 border border-slate-800">
-          <span className="text-slate-400 text-[11px]">Downtime</span>
+        <div className="rounded-xl bg-neutral-900/60 p-3 border border-neutral-800">
+          <span className="text-neutral-400 text-[11px]">Downtime</span>
           <p className="font-bold text-slate-100 mt-0.5">{result.downtime}</p>
         </div>
-        <div className="rounded-xl bg-slate-900/60 p-3 border border-slate-800">
-          <span className="text-slate-400 text-[11px]">Recovery Time</span>
-          <p className="font-bold text-cyan-400 mt-0.5">{result.recoveryTime}</p>
+        <div className="rounded-xl bg-neutral-900/60 p-3 border border-neutral-800">
+          <span className="text-neutral-400 text-[11px]">Recovery Time</span>
+          <p className="font-bold text-emerald-400 mt-0.5">{result.recoveryTime}</p>
         </div>
       </div>
 

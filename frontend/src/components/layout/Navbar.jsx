@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useProject } from '../../context/ProjectContext';
 import { Beaker, Activity, CheckCircle2, RefreshCw, AlertTriangle, ArrowRight } from 'lucide-react';
 import appLogo from '../../assets/app logo.png';
@@ -10,8 +11,8 @@ export default function Navbar({ onOpenConnectModal, onOpenCreateModal }) {
     <header className="sticky top-0 z-40 w-full border-b border-neutral-900 bg-black/90 backdrop-blur-md">
       <div className="flex h-16 items-center justify-between px-6">
         {/* Brand */}
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-950 border border-neutral-800 p-1 shadow-lg shadow-emerald-500/10">
+        <Link to="/" className="flex items-center gap-3 cursor-pointer group">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-950 border border-neutral-800 p-1 shadow-lg shadow-emerald-500/10 group-hover:border-emerald-500/40 transition-all">
             <img src={appLogo} alt="ShadowLab Logo" className="h-full w-full object-contain" />
           </div>
           <div>
@@ -23,14 +24,14 @@ export default function Navbar({ onOpenConnectModal, onOpenCreateModal }) {
             </div>
             <p className="text-xs text-neutral-400 hidden sm:block">Experiment on production without touching production.</p>
           </div>
-        </div>
+        </Link>
 
         {/* Center Banner / Notification */}
         {notification ? (
           <div className={`hidden md:flex items-center gap-2 px-4 py-1.5 rounded-lg border text-xs font-medium ${
             notification.type === 'success' ? 'bg-emerald-950/80 border-emerald-500/30 text-emerald-300' :
             notification.type === 'warning' ? 'bg-amber-950/80 border-amber-500/30 text-amber-300' :
-            'bg-cyan-950/80 border-cyan-500/30 text-cyan-300'
+            'bg-emerald-950/80 border-emerald-500/30 text-emerald-300'
           }`}>
             {notification.type === 'warning' ? <AlertTriangle className="h-3.5 w-3.5" /> : <CheckCircle2 className="h-3.5 w-3.5" />}
             {notification.message}

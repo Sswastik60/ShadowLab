@@ -12,7 +12,7 @@ export default function MetricCard({ title, value, unit = '', subtitle, icon: Ic
       case 'danger':
         return 'text-rose-400 border-rose-500/20 bg-rose-500/10';
       default:
-        return 'text-cyan-400 border-cyan-500/20 bg-cyan-500/10';
+        return 'text-emerald-400 border-emerald-500/20 bg-emerald-500/10';
     }
   };
 

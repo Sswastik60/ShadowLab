@@ -9,7 +9,7 @@ export default function Sidebar() {
   const navItems = [
     {
       name: 'Production Overview',
-      path: '/',
+      path: '/dashboard',
       icon: LayoutDashboard,
     },
     {

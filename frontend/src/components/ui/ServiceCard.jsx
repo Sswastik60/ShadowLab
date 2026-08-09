@@ -87,9 +87,9 @@ export default function ServiceCard({ service }) {
         )}
 
         {service.hitRate !== undefined && (
-          <div className="rounded-xl bg-slate-900/60 p-2.5 border border-slate-800">
-            <span className="text-slate-400 text-[10px]">Cache Hit Rate</span>
-            <p className="font-bold text-cyan-400 text-sm mt-0.5">{service.hitRate}</p>
+          <div className="rounded-xl bg-neutral-950 p-2.5 border border-neutral-900">
+            <span className="text-neutral-400 text-[10px]">Cache Hit Rate</span>
+            <p className="font-bold text-emerald-400 text-sm mt-0.5">{service.hitRate}</p>
           </div>
         )}
       </div>

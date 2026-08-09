@@ -72,7 +72,7 @@ export default function Settings() {
         {/* AI Analyst Credentials Card */}
         <div className="glass-panel rounded-2xl p-6 border-slate-800 space-y-4">
           <div className="flex items-center gap-3 pb-3 border-b border-slate-800">
-            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+            <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
               <Cpu className="h-5 w-5" />
             </div>
             <div>
