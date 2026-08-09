@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Footer from '../components/layout/Footer';
 import {
   Beaker,
   Zap,
@@ -426,27 +427,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ------------------------------------------------------------- */}
-      {/* 7. FOOTER */}
-      {/* ------------------------------------------------------------- */}
-      <footer className="border-t border-neutral-900 py-12 px-6 max-w-7xl mx-auto text-xs text-neutral-500 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <img src={appLogo} alt="ShadowLab Logo" className="h-6 w-6 object-contain" />
-          <span className="font-bold text-white">ShadowLabs</span>
-          <span>© 2026 ZeroOps Hackathon</span>
-        </div>
-        <div className="flex items-center gap-6">
-          <button onClick={handleLaunchApp} className="hover:text-emerald-400 transition-colors">
-            App Dashboard
-          </button>
-          <a href="#features" className="hover:text-emerald-400 transition-colors">
-            Features
-          </a>
-          <a href="#tech-stack" className="hover:text-emerald-400 transition-colors">
-            Zerops Architecture
-          </a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

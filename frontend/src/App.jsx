@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ProjectProvider } from './context/ProjectContext';
 import Navbar from './components/layout/Navbar';
 import Sidebar from './components/layout/Sidebar';
+import Footer from './components/layout/Footer';
 
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
@@ -10,6 +11,8 @@ import Experiments from './pages/Experiments';
 import ExperimentDetail from './pages/ExperimentDetail';
 import ChaosLab from './pages/ChaosLab';
 import Settings from './pages/Settings';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 import ConnectProjectModal from './components/modals/ConnectProjectModal';
 import CreateExperimentModal from './components/modals/CreateExperimentModal';
@@ -32,7 +35,7 @@ function AppLayout() {
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
 
-        <main className="flex-1 overflow-y-auto min-h-[calc(100vh-4rem)]">
+        <main className="flex-1 overflow-y-auto min-h-[calc(100vh-4rem)] flex flex-col justify-between">
           <Routes>
             <Route
               path="/dashboard"
@@ -50,7 +53,10 @@ function AppLayout() {
             <Route path="/experiments/:id" element={<ExperimentDetail />} />
             <Route path="/chaos" element={<ChaosLab />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
           </Routes>
+          <Footer />
         </main>
       </div>
 
@@ -80,6 +86,8 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
           <Route path="/*" element={<AppLayout />} />
         </Routes>
       </Router>
